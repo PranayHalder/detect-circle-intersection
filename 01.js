@@ -21,13 +21,11 @@ document.addEventListener("click", (e) => {
 
   const circles = document.querySelectorAll(".circle");
   circles.length >= 2 
-      ? circles.forEach(c => document.body.removeChild(c))
+      ? circles.forEach(c => {document.body.removeChild(c);})
       : circles.forEach(c => {
           const x2 = parseFloat(c.dataset.x), y2 = parseFloat(c.dataset.y);
-          const existingRadius = parseFloat(c.dataset.radius);
-          if (checkInterceptingCircle(x, x2, y, y2, radius + existingRadius)) {
-              console.log("Circles are intercepting");
-          }
+          const radius2 = parseFloat(c.dataset.radius);
+          checkIntersecttingCircle(x, x2, y, y2, radius,radius2);
       });
   
   document.body.appendChild(circle);
@@ -39,10 +37,14 @@ document.addEventListener("click", (e) => {
     return Array.from({ length: 3 }, () => Math.floor(Math.random() * 256));
   }
 
-  function checkInterceptingCircle(x,x1,y,y1,totalRadius)
+  function checkIntersecttingCircle(x,x1,y,y1,radius,radius2)
   {
-     const distanceBetweenCircles =  Math.sqrt(Math.pow(x - x1,2) + Math.pow(y - y1,2));
-     return totalRadius > distanceBetweenCircles;
+     const distanceBetweenCircles =  Math.sqrt(Math.pow(x - x1,2) + Math.pow(y - y1,2));  
+     console.log(
+      distanceBetweenCircles <= Math.abs(radius2 - radius) ? "Inside Circle Without Intersecting!" :
+      distanceBetweenCircles <= radius + radius2 ? "Circles Are Intersecting!" :
+      "Not Intersecting!"
+  );
   }
 
  
